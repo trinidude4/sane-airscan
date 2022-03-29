@@ -1,0 +1,53 @@
+name: Build package
+
+on: [workflow_dispatch]
+
+env:
+  PACKAGE_NAME: sane-airscan
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@main
+   
+    - name: Initialize environment
+      run: |
+        sudo apt update
+        sudo apt install build-essential ccache ecj fastjar file g++ gawk \
+        gettext git java-propose-classpath libelf-dev libncurses5-dev \
+        libncursesw5-dev libssl-dev python python2.7-dev python3 unzip wget \
+        python3-distutils python3-setuptools python3-dev rsync subversion \
+        swig time xsltproc zlib1g-dev
+
+    - name: Clone repository
+      run: git clone https://github.com/trinidude4/openwrt -b openwrt-21.02 openwrt
+     
+    - name: Update feeds
+      run: cd $GITHUB_WORKSPACE/openwrt && ./scripts/feeds update -a
+     
+    - name: Install feeds
+      run: cd $GITHUB_WORKSPACE/openwrt && ./scripts/feeds install -a
+       
+    - name: Copy config
+      run: cd $GITHUB_WORKSPACE && cp .config $GITHUB_WORKSPACE/openwrt/.
+
+    - name: Make defconfig
+      run: cd $GITHUB_WORKSPACE/openwrt && make defconfig  
+
+    - name: Compile toolchain
+      run: cd $GITHUB_WORKSPACE/openwrt && make toolchain/compile
+     
+    - name: Compile linux
+      run: cd $GITHUB_WORKSPACE/openwrt && make target/linux/compile
+     
+    - name: Compile package
+      run: cd $GITHUB_WORKSPACE/openwrt && make package/$PACKAGE_NAME/compile
+
+    - name: Upload bin directory
+      uses: actions/upload-artifact@main
+      with:
+        name: ${{env.PACKAGE_NAME}}_bin
+        path: openwrt/bin
