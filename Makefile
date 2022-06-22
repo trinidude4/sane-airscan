@@ -5,8 +5,8 @@ PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/alexpevzner/sane-airscan.git
-PKG_SOURCE_VERSION:=ba8ce0a
-PKG_SOURCE_DATE:=2022-05-05
+PKG_SOURCE_VERSION:=04da476
+PKG_SOURCE_DATE:=2022-06-11
 PKG_VERSION:=$(PKG_SOURCE_DATE)
 
 PKG_MAINTAINER:=alexpevzner <example@example.com>
