@@ -22,7 +22,7 @@ define Package/sane-airscan
   URL:=https://github.com/alexpevzner/sane-airscan
   SECTION:=utils
   CATEGORY:=Utilities
-  DEPENDS:=+libsane +libjpeg-turbo +libpng +libavahi-client +libxml2 +gnutls-utils
+  DEPENDS:=+libsane +libjpeg-turbo +libpng +libavahi-client +libxml2 +gnutls-utils +libtiff
 endef
 
 define Package/sane-airscan/description
