@@ -6,7 +6,7 @@ permissions: write-all
 
 env:
   PACKAGE_NAME: sane-airscan
-  BUILD_TARGET: 21.02.7
+  BUILD_TARGET: 23.05-SNAPSHOT
 
 jobs:
   build:
@@ -27,9 +27,9 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE
         mv .config .config.bak
-        wget https://downloads.openwrt.org/releases/$BUILD_TARGET/targets/mvebu/cortexa9/openwrt-sdk-$BUILD_TARGET-mvebu-cortexa9_gcc-8.4.0_musl_eabi.Linux-x86_64.tar.xz
+        wget https://downloads.openwrt.org/releases/$BUILD_TARGET/targets/mvebu/cortexa9/openwrt-sdk-$BUILD_TARGET-mvebu-cortexa9_gcc-12.3.0_musl_eabi.Linux-x86_64.tar.xz
         tar -xhf openwrt-sdk-*.tar.xz
-        rsync -a openwrt-sdk-$BUILD_TARGET-mvebu-cortexa9_gcc-8.4.0_musl_eabi.Linux-x86_64/* .
+        rsync -a openwrt-sdk-$BUILD_TARGET-mvebu-cortexa9_gcc-12.3.0_musl_eabi.Linux-x86_64/* .
         
     - name: Update feeds
       run: cd $GITHUB_WORKSPACE && ./scripts/feeds update -a
