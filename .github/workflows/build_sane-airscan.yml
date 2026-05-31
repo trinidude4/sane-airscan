@@ -6,7 +6,7 @@ permissions: write-all
 
 env:
   PACKAGE_NAME: sane-airscan
-  BUILD_TARGET: 23.05-SNAPSHOT
+  BUILD_TARGET: 25.12-SNAPSHOT
 
 jobs:
   build:
@@ -27,9 +27,9 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE
         mv .config .config.bak
-        wget https://downloads.openwrt.org/releases/$BUILD_TARGET/targets/mvebu/cortexa9/openwrt-sdk-$BUILD_TARGET-mvebu-cortexa9_gcc-12.3.0_musl_eabi.Linux-x86_64.tar.xz
-        tar -xhf openwrt-sdk-*.tar.xz
-        rsync -a openwrt-sdk-$BUILD_TARGET-mvebu-cortexa9_gcc-12.3.0_musl_eabi.Linux-x86_64/* .
+        wget https://downloads.openwrt.org/releases/$BUILD_TARGET/targets/mvebu/cortexa9/openwrt-sdk-$BUILD_TARGET-mvebu-cortexa9_gcc-14.3.0_musl_eabi.Linux-x86_64.tar.zst
+        tar --zstd -xf openwrt-sdk-*.tar.zst
+        rsync -a openwrt-sdk-$BUILD_TARGET-mvebu-cortexa9_gcc-14.3.0_musl_eabi.Linux-x86_64/* .
         
     - name: Update feeds
       run: cd $GITHUB_WORKSPACE && ./scripts/feeds update -a
@@ -60,4 +60,4 @@ jobs:
         prerelease: false
         title: Latest sane-airscan
         files: |
-          bin/packages/arm_cortex-a9_vfpv3-d16/custom/*.ipk
+          bin/packages/arm_cortex-a9_vfpv3-d16/custom/*.apk
